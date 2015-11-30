@@ -20,18 +20,18 @@ For an example click: http://genderit.peaceinformaticslab.org/
 # Installation
 	
 1. Fill in the database settings in the webserver.cfg, e.g.:
-
+```
     user = [username]
     password = [password_user]
     host = [ipadres_server]
     port = 3306
-    default_db = [db_name]
+    default_db = [db_name]```
 
 2. Execute the following commands:
-
+```
     virtualenv venv
     source venv/bin/activate		
-    pip install -r requirements.txt
+    pip install -r requirements.txt```
     
 3. Execute the sql code in `schema.sql` in order to create the correct tables and procedures
 4. Take your twitter data and fill it in into the t_tus_twitter table. Description of the columns are:
@@ -47,13 +47,13 @@ For an example click: http://genderit.peaceinformaticslab.org/
 
 1. Activate the virtual environment
 
-    source venv/bin/activate		
+    `source venv/bin/activate	`	
     
 2. Run the website
 
-    make run
+    `make run`
     
-3. Browse to: http://localhost:8080
+3. Browse to: `http://localhost:8080`
 
 # Getting the results
 
