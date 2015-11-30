@@ -1,0 +1,9 @@
+{% extends 'base.jinja' %}
+{% set tile = 'Loading' %}
+
+{% block content %}
+<h1>Loading</h1>
+
+<div id="loadingOverlay"></div>
+<script>$('#loadingOverlay').show();</script>
+{% endblock content %}

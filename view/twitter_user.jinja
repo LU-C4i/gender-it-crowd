@@ -1,0 +1,32 @@
+{% extends 'base.jinja' %}
+{% set tile = 'Loading' %}
+
+{% block content %}
+{% if user  %}
+    <div style="width:850px;margin-left: auto;margin-right: auto; padding:0;">
+        <h3 style="margin-top:0;">{{user.tus_name}}</h3>
+
+        <div class="float_left">
+            <img width="400" height="400" src="{{user.tus_picture_url}}" > <br/>
+            <a href="https://twitter.com/{{user.tus_screenname}}" target="_blank">https://twitter.com/{{user.tus_screenname}}</a>
+        </div>
+        <div class="float_left" style="width: 400px;">
+            <div>
+                {% if user.tus_description %}
+                <h3>Description</h3>
+
+                <span>{{user.tus_description}}</span>
+                {% endif %}
+            </div>
+            <div>
+                <h3>Last tweet</h3>
+                <span>{{user.tus_last_tweet}}</span>
+            </div>
+        </div>
+        <div class="clear_float"></div>
+    </div>
+
+{% else %}
+    <h1>Invalid Twitter user</h1>
+{% endif %}
+{% endblock content %}

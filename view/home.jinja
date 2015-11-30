@@ -1,0 +1,24 @@
+{% extends 'base.jinja' %}
+{% set tile = 'Login' %}
+
+{% block content %}
+<div id="user_prediction" style="padding-bottom:16px;width:300px;">
+    <h1>Welcome</h1>
+
+    <p>You want to help out, awesome! For more information click on the green button.</p>
+    <p>Please login</p>
+
+    <form action="/" method="post">
+        <input autocapitalize="off" autocomplete="off" autocorrect="off" id="login-username" name="login-username" placeholder="Username or Email" spellcheck="false" required>
+        <br />
+        <input id="login-password" name="login-password" placeholder="Password" type="password" required>
+        <br />
+        <button name="login-submit" type="submit" class="ui-button">Log me in!</button>
+        <br />
+        <a href="/register">Or register here</a>
+    </form>
+
+
+</div>
+
+{% endblock content %}

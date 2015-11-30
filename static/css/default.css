@@ -1,0 +1,52 @@
+/*SIDEBAR*/
+#sidebar{
+    position:fixed;
+    height:100%;
+    background:#f1f1f1;
+    width:300px;
+    right:0px;
+    top: 0;
+    margin-right: -300px;
+    overflow: auto;
+}
+#btnSidebar{
+    position: fixed;
+    width: 100px;
+    right: 0px;
+    background: rgb(117, 231, 117);
+    top: 100px;
+    border-radius: 5px 0px 0 5px;
+    color: #fff;
+    text-align: center;
+    padding: 40px 0;
+    cursor:pointer;
+}
+.expandedTxt{
+  display:none;
+}
+#btnSidebar.expanded .expandedTxt{
+ display:block;
+}
+#btnSidebar.expanded .click{
+ display:none;
+}
+
+.leaderboard {
+    padding: 10px;
+}
+/*progress*/
+.progress {
+    width: 300px;
+    float: right;
+    display: none;
+}
+
+#leaderboard {
+    position: fixed;
+    top: 10px;
+    left: 20px;
+}
+
+#leaderboard a {
+    padding: 0;
+}

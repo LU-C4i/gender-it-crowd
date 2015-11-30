@@ -1,0 +1,84 @@
+{% set version = '0.6' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GENDER-IT!</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css?v={{version}}">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.css?v={{version}}">
+    <link rel="stylesheet" type="text/css" href="/static/css/default.css?v={{version}}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <script src="/static/script/bootstrap.min.js"></script>
+    <script src="/static/script/utils.js?v={{version}}"></script>
+    <script src="/static/script/main.js?v={{version}}"></script>
+    <script type="text/javascript">
+
+        //set notify defaults
+        //for more see: http://notifyjs.com/
+        $.notify.defaults({
+            elementPosition: 'top center',
+            globalPosition: 'top center',
+            position: 'top center',
+            className: "warn",
+            showDuration: 600,
+            clickToHide: true,
+        });
+
+        var show_message = function(message) {
+           $.notify(message, "warn");
+        }
+    </script>
+
+
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    {% block meta %}
+    {% endblock meta %}
+</head>
+<body>
+    {% if hide_sidebar is not defined %}
+
+    <div class="willSlide" id='sidebar'>
+        <p>
+            With your support, you are helping UN Global Pulse and the Peace Informatics Lab (Leiden University)
+            improve the classification of pertaining to the sustainable development goals.
+            For a first impression of what we are working on, please visit:
+            <a href="http://post2015.unglobalpulse.net/" target="_blank">http://post2015.unglobalpulse.net/</a>
+        </p>
+        <p>Here you can make your own account and start classifying accounts as follows:</p>
+        <ul>
+            <li>Male</li>
+            <li>Female</li>
+            <li>Other (i.e. non-personal accounts, e.g.: company, campaign, organisation)</li>
+            <li>Unknown (ambiguous or contradictory information)</li>
+            <li>Skip (unable to interpret information, e.g. not speaking the language)</li>
+        </ul>
+        <div id="js-leaderboard" class="leaderboard"></div>
+    </div>
+    <div class="willSlide" id='btnSidebar'>
+        <span class="click">&lt;&lt;&lt; Show &nbsp;&nbsp; help!</span>
+        <span class="expandedTxt">&gt;&gt;&gt; Hide help!</span>
+    </div>
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block javascript_bottom %}
+    {% endblock javascript_bottom %}
+
+    {% if message is defined %}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                console.log( "ready!" );
+                var message = '{{message}}'
+                if (message != '') {
+                    $.notify(message, "warn");
+                }
+            });
+        </script>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,134 @@
+{% extends 'base.jinja' %}
+{% set tile = 'Prediction' %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/ui-lightness/jquery-ui.css">
+
+<div>
+    <div id="user_prediction" style="padding-bottom:16px;width:850px;">
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                0%
+            </div>
+        </div>
+
+        <h3>What is the gender of twitter user below?</h3>
+
+        <div>You are logged as: {{username}} (<a href="/logout">logout</a>). Thank you so much for helping!</div>
+
+        <div>
+            <div id="options_gender" class="float_left" style="padding-right: 20px;">
+                <input type="radio" id="radio_male" name="radio_gender" data-gender="male" class="js--radio-gender">
+                <label for="radio_male">Male</label>
+                <input type="radio" id="radio_female" name="radio_gender" data-gender="female" class="js--radio-gender">
+                <label for="radio_female">Female</label>
+                <input type="radio" id="radio_other" name="radio_gender" data-gender="other" title="Can be a company or an organisation" class="js--radio-gender">
+                <label for="radio_other">Other</label>
+                <input type="radio" id="radio_unknown" name="radio_gender" data-gender="unknown" class="js--radio-gender">
+                <label for="radio_unknown">Unknown</label>
+            </div>
+
+            <div id="js--options" class="float_left" style="width:170px;">
+                <input type="radio" id="js--skip" name="radio_gender" data-gender="skipped" class="js--radio-gender">
+                <label for="js--skip">Skip! Next user!</label>
+            </div>
+            <div class="clear_float"></div>
+        </div>
+
+    </div>
+
+    <div id="iframe_content">
+        <iframe id="twitter_iframe" src="/loading" frameborder="0"></iframe>
+    </div>
+
+
+</div>
+{% endblock content%}
+
+{% block javascript_bottom %}
+<script type="text/javascript">
+    createLeaderboard();
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#options_gender").buttonset();
+        $("#js--options").buttonset();
+
+        Proxy.get_next_twitter_user(function(data) {
+            save_callback(data);
+        }, function(err){
+            save_error_callback(err);
+        });
+    });
+
+    var current_id = 0;
+    var current_twitter_screenname = '';
+
+    var save = function(gender) {
+        Proxy.save_gender(gender, current_id, function(data) {
+            console.log('Saving gender: ' + gender + ' for user: ' + current_id);
+            save_callback(data);
+        }, function(err){
+            save_error_callback(err);
+        });
+    };
+
+    var save_callback = function(data) {
+        console.log("Loading new data");
+        if (data.message != 'ok') {
+            $.notify(data.message, "warn");
+        }
+
+        //$.notify(data.progress, "warn");
+        console.log('progress: ' + data.progress + '%');
+        if((data.progress*1) > 3){
+            $('.progress').show();
+            $('.progress-bar').width(data.progress + '%');
+            $('.progress-bar').html(roundToTwo(data.progress) + '%');
+        }
+
+        if(data.message == 'last one') {
+            $('#twitter_iframe').hide();
+            $('#iframe_content').html('<h1>No more Twitter users left to process</h1>');
+            current_id = 0;
+            current_twitter_screenname = '';
+            console.log("last one");
+            return;
+        }
+
+        current_id = data.id;
+        current_twitter_screenname = data.twitter_screenname;
+        console.log('Loading id: ' + current_id);
+        var url = '/twitter/user/' + current_id;
+
+        $('#iframe_content').children().remove();
+        $('#iframe_content').html('<iframe id="twitter_iframe" src="'+url+'" frameborder="0"></iframe>');
+
+        $('.js--radio-gender').prop('checked', false);
+
+        console.log('Loading done');
+    };
+
+    var save_error_callback = function(err) {
+        console.log("Error occurred");
+        show_message('Error occurred...');
+    };
+
+    $('.js--radio-gender').click(function() {
+        //refresh leaderboard
+        createLeaderboard();
+
+        $('#twitter_iframe').attr('src', '/loading');
+
+        var $this = $(this);
+        var gender = $this.data('gender');
+        if (typeof gender === "undefined") {
+            //return;
+            save("skipped")
+        }
+        save(gender);
+    });
+</script>
+{% endblock javascript_bottom %}
