@@ -63,6 +63,7 @@ target/
 
 #VENV
 */venv/*
+venv/
 
 #Other
 *~
