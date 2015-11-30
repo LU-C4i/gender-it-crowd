@@ -25,14 +25,14 @@ For an example click: http://genderit.peaceinformaticslab.org/
     password = [password_user]
     host = [ipadres_server]
     port = 3306
-    default_db = [db_name]```
-
+    default_db = [db_name]
+```
 2. Execute the following commands:
 ```
     virtualenv venv
     source venv/bin/activate		
-    pip install -r requirements.txt```
-    
+    pip install -r requirements.txt
+```
 3. Execute the sql code in `schema.sql` in order to create the correct tables and procedures
 4. Take your twitter data and fill it in into the t_tus_twitter table. Description of the columns are:
     * `tus_id`, is auto increment
